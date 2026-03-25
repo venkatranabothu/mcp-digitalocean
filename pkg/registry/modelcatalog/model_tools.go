@@ -24,9 +24,10 @@ func NewModelTool(client func(ctx context.Context) (*godo.Client, error)) *Model
 
 // searchModels searches for models in the catalog using a search string
 func (m *ModelTool) searchModels(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	// Default to empty string if SearchQuery is not provided (returns all models)
 	searchQuery, ok := req.GetArguments()["SearchQuery"].(string)
-	if !ok || searchQuery == "" {
-		return mcp.NewToolResultError("SearchQuery is required"), nil
+	if !ok {
+		searchQuery = ""
 	}
 
 	client, err := m.client(ctx)
@@ -82,19 +83,13 @@ func (m *ModelTool) getModelCard(ctx context.Context, req mcp.CallToolRequest) (
 
 	type ModelMetadata struct {
 		UUID      string          `json:"uuid"`
-		ID        string          `json:"id"`
 		Name      string          `json:"name"`
-		URL       string          `json:"url,omitempty"`
-		Usecases  []string        `json:"usecases,omitempty"`
 		Agreement *godo.Agreement `json:"agreement,omitempty"`
 	}
 
 	metadata := ModelMetadata{
 		UUID:      model.Uuid,
-		ID:        model.InferenceName,
 		Name:      model.Name,
-		URL:       model.Url,
-		Usecases:  model.Usecases,
 		Agreement: model.Agreement,
 	}
 
@@ -113,8 +108,8 @@ func (m *ModelTool) Tools() []server.ServerTool {
 			Handler: m.searchModels,
 			Tool: mcp.NewTool(
 				"model-catalog-search",
-				mcp.WithDescription("Search for models in the catalog using a search query. Returns a list of model UUIDs that match the search criteria."),
-				mcp.WithString("SearchQuery", mcp.Required(), mcp.Description("Search query string to find models")),
+				mcp.WithDescription("Search for models in the catalog using a search query. Returns a list of model UUIDs that match the search criteria. An empty or missing search query returns all available models."),
+				mcp.WithString("SearchQuery", mcp.Description("Search query string to find models (optional; empty or omitted returns all models)")),
 			),
 		},
 		{
