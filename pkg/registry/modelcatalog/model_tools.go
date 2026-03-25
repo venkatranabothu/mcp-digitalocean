@@ -34,19 +34,21 @@ func (m *ModelTool) searchModels(ctx context.Context, req mcp.CallToolRequest) (
 		return nil, fmt.Errorf("failed to get DigitalOcean client: %w", err)
 	}
 
-	// TODO: Call GoDo API for catalog search
-	// Example: models, _, err := client.ModelCatalog.Search(ctx, searchQuery)
-	_ = client
+	uuids, _, err := client.GradientAI.SearchModels(ctx, searchQuery)
+	if err != nil {
+		return nil, fmt.Errorf("failed to search models: %w", err)
+	}
 
-	// Placeholder response structure
 	type ModelSearchResult struct {
-		ModelIDs []string `json:"model_ids"`
-		Query    string   `json:"query"`
+		ModelUUIDs  []string `json:"model_uuids"`
+		SearchQuery string   `json:"search_query"`
+		Count       int      `json:"count"`
 	}
 
 	result := ModelSearchResult{
-		ModelIDs: []string{},
-		Query:    searchQuery,
+		ModelUUIDs:  uuids,
+		SearchQuery: searchQuery,
+		Count:       len(uuids),
 	}
 
 	jsonData, err := json.MarshalIndent(result, "", "  ")
@@ -57,11 +59,11 @@ func (m *ModelTool) searchModels(ctx context.Context, req mcp.CallToolRequest) (
 	return mcp.NewToolResultText(string(jsonData)), nil
 }
 
-// getModelCard retrieves full metadata for a specific model
+// getModelCard retrieves metadata for a specific model
 func (m *ModelTool) getModelCard(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-	modelID, ok := req.GetArguments()["ModelID"].(string)
-	if !ok || modelID == "" {
-		return mcp.NewToolResultError("ModelID is required"), nil
+	modelUUID, ok := req.GetArguments()["ModelUUID"].(string)
+	if !ok || modelUUID == "" {
+		return mcp.NewToolResultError("ModelUUID is required"), nil
 	}
 
 	client, err := m.client(ctx)
@@ -69,30 +71,34 @@ func (m *ModelTool) getModelCard(ctx context.Context, req mcp.CallToolRequest) (
 		return nil, fmt.Errorf("failed to get DigitalOcean client: %w", err)
 	}
 
-	// TODO: Call GoDo API to get model card
-	// Example: modelCard, _, err := client.ModelCatalog.Get(ctx, modelID)
-	_ = client
-
-	// Placeholder response structure
-	type ModelCard struct {
-		ModelID        string   `json:"model_id"`
-		Name           string   `json:"name"`
-		Description    string   `json:"description"`
-		LicenseType    string   `json:"license_type"`
-		AttributionURL string   `json:"attribution_url"`
-		DeploymentType []string `json:"deployment_type"`
+	model, _, err := client.GradientAI.GetModelByUUID(ctx, modelUUID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get model: %w", err)
 	}
 
-	modelCard := ModelCard{
-		ModelID:        modelID,
-		Name:           "",
-		Description:    "",
-		LicenseType:    "",
-		AttributionURL: "",
-		DeploymentType: []string{},
+	if model == nil {
+		return mcp.NewToolResultError(fmt.Sprintf("Model with UUID '%s' not found", modelUUID)), nil
 	}
 
-	jsonData, err := json.MarshalIndent(modelCard, "", "  ")
+	type ModelMetadata struct {
+		UUID      string          `json:"uuid"`
+		ID        string          `json:"id"`
+		Name      string          `json:"name"`
+		URL       string          `json:"url,omitempty"`
+		Usecases  []string        `json:"usecases,omitempty"`
+		Agreement *godo.Agreement `json:"agreement,omitempty"`
+	}
+
+	metadata := ModelMetadata{
+		UUID:      model.Uuid,
+		ID:        model.InferenceName,
+		Name:      model.Name,
+		URL:       model.Url,
+		Usecases:  model.Usecases,
+		Agreement: model.Agreement,
+	}
+
+	jsonData, err := json.MarshalIndent(metadata, "", "  ")
 	if err != nil {
 		return nil, fmt.Errorf("marshal error: %w", err)
 	}
@@ -107,7 +113,7 @@ func (m *ModelTool) Tools() []server.ServerTool {
 			Handler: m.searchModels,
 			Tool: mcp.NewTool(
 				"model-catalog-search",
-				mcp.WithDescription("Search for models in the catalog using a search query. Returns a list of model IDs that match the search criteria."),
+				mcp.WithDescription("Search for models in the catalog using a search query. Returns a list of model UUIDs that match the search criteria."),
 				mcp.WithString("SearchQuery", mcp.Required(), mcp.Description("Search query string to find models")),
 			),
 		},
@@ -115,8 +121,8 @@ func (m *ModelTool) Tools() []server.ServerTool {
 			Handler: m.getModelCard,
 			Tool: mcp.NewTool(
 				"model-catalog-get-card",
-				mcp.WithDescription("Get the model metadata for a specific model ID."),
-				mcp.WithString("ModelID", mcp.Required(), mcp.Description("The unique identifier of the model")),
+				mcp.WithDescription("Get the model metadata for a specific model UUID."),
+				mcp.WithString("ModelUUID", mcp.Required(), mcp.Description("The unique UUID identifier of the model")),
 			),
 		},
 	}
