@@ -62,7 +62,7 @@ func TestModelTool_searchModels(t *testing.T) {
 			mockSetup: func(m *MockGradientAIService) {
 				m.EXPECT().SearchModels(gomock.Any(), "llama").Return(nil, nil, errors.New("api error"))
 			},
-			expectError:    true,
+			expectError:   true,
 			expectGoError: true,
 		},
 		{
@@ -108,7 +108,7 @@ func TestModelTool_searchModels(t *testing.T) {
 			textContent, ok := resp.Content[0].(mcp.TextContent)
 			require.True(t, ok)
 			require.Contains(t, textContent.Text, "model_uuids")
-			
+
 			if tc.checkUUIDs {
 				var result struct {
 					ModelUUIDs  []string `json:"model_uuids"`
@@ -168,7 +168,7 @@ func TestModelTool_getModelCard(t *testing.T) {
 				m.EXPECT().GetModelByUUID(gomock.Any(), "12345678-1234-1234-1234-123456789012").
 					Return(nil, nil, errors.New("api error"))
 			},
-			expectError:    true,
+			expectError:   true,
 			expectGoError: true,
 		},
 		{
@@ -218,7 +218,7 @@ func TestModelTool_getModelCard(t *testing.T) {
 			require.True(t, ok)
 			require.Contains(t, textContent.Text, testModel.Uuid)
 			require.Contains(t, textContent.Text, testModel.Name)
-			
+
 			if tc.checkModel {
 				var result struct {
 					UUID      string          `json:"uuid"`
