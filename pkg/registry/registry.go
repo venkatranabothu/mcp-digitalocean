@@ -13,9 +13,9 @@ import (
 	"mcp-digitalocean/pkg/registry/docr"
 	"mcp-digitalocean/pkg/registry/doks"
 	"mcp-digitalocean/pkg/registry/droplet"
+	genaimodelcatalog "mcp-digitalocean/pkg/registry/genai-modelcatalog"
 	"mcp-digitalocean/pkg/registry/insights"
 	"mcp-digitalocean/pkg/registry/marketplace"
-	"mcp-digitalocean/pkg/registry/modelcatalog"
 	"mcp-digitalocean/pkg/registry/networking"
 	"mcp-digitalocean/pkg/registry/spaces"
 
@@ -27,17 +27,17 @@ type getClientFn func(ctx context.Context) (*godo.Client, error)
 
 // supportedServices is a set of services that we support in this MCP server.
 var supportedServices = map[string]struct{}{
-	"apps":         {},
-	"networking":   {},
-	"droplets":     {},
-	"accounts":     {},
-	"spaces":       {},
-	"databases":    {},
-	"marketplace":  {},
-	"modelcatalog": {},
-	"insights":     {},
-	"doks":         {},
-	"docr":         {},
+	"apps":               {},
+	"networking":         {},
+	"droplets":           {},
+	"accounts":           {},
+	"spaces":             {},
+	"databases":          {},
+	"marketplace":        {},
+	"genai-modelcatalog": {},
+	"insights":           {},
+	"doks":               {},
+	"docr":               {},
 }
 
 // registerAppTools registers the app platform tools with the MCP server.
@@ -114,7 +114,7 @@ func registerMarketplaceTools(s *server.MCPServer, getClient getClientFn) error 
 
 // registerModelCatalogTools registers the model catalog tools with the MCP server.
 func registerModelCatalogTools(s *server.MCPServer, getClient getClientFn) error {
-	s.AddTools(modelcatalog.NewModelTool(getClient).Tools()...)
+	s.AddTools(genaimodelcatalog.NewModelTool(getClient).Tools()...)
 	return nil
 }
 
@@ -193,9 +193,9 @@ func Register(logger *slog.Logger, s *server.MCPServer, getClient getClientFn, s
 			if err := registerMarketplaceTools(s, getClient); err != nil {
 				return fmt.Errorf("failed to register marketplace tools: %w", err)
 			}
-		case "modelcatalog":
+		case "genai-modelcatalog":
 			if err := registerModelCatalogTools(s, getClient); err != nil {
-				return fmt.Errorf("failed to register modelcatalog tools: %w", err)
+				return fmt.Errorf("failed to register genai-modelcatalog tools: %w", err)
 			}
 		case "insights":
 			if err := registerInsightsTools(s, getClient); err != nil {

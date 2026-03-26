@@ -1,4 +1,4 @@
-package modelcatalog
+package genaimodelcatalog
 
 import (
 	"context"
