@@ -62,8 +62,7 @@ func TestModelTool_searchModels(t *testing.T) {
 			mockSetup: func(m *MockGradientAIService) {
 				m.EXPECT().SearchModels(gomock.Any(), "llama").Return(nil, nil, errors.New("api error"))
 			},
-			expectError:   true,
-			expectGoError: true,
+			expectError: true,
 		},
 		{
 			name: "success with results",
@@ -168,8 +167,7 @@ func TestModelTool_getModelCard(t *testing.T) {
 				m.EXPECT().GetModelByUUID(gomock.Any(), "12345678-1234-1234-1234-123456789012").
 					Return(nil, nil, errors.New("api error"))
 			},
-			expectError:   true,
-			expectGoError: true,
+			expectError: true,
 		},
 		{
 			name: "model not found",

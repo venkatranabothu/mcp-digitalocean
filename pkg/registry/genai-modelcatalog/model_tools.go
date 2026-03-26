@@ -37,7 +37,7 @@ func (m *ModelTool) searchModels(ctx context.Context, req mcp.CallToolRequest) (
 
 	uuids, _, err := client.GradientAI.SearchModels(ctx, searchQuery)
 	if err != nil {
-		return nil, fmt.Errorf("failed to search models: %w", err)
+		return mcp.NewToolResultErrorFromErr("Failed to search models", err), nil
 	}
 
 	type ModelSearchResult struct {
@@ -74,7 +74,7 @@ func (m *ModelTool) getModelCard(ctx context.Context, req mcp.CallToolRequest) (
 
 	model, _, err := client.GradientAI.GetModelByUUID(ctx, modelUUID)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get model: %w", err)
+		return mcp.NewToolResultErrorFromErr("Failed to get model", err), nil
 	}
 
 	if model == nil {
