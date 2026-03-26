@@ -107,7 +107,7 @@ func (m *ModelTool) Tools() []server.ServerTool {
 		{
 			Handler: m.searchModels,
 			Tool: mcp.NewTool(
-				"model-catalog-search",
+				"genai-model-catalog-search",
 				mcp.WithDescription("Search for models in the catalog using a search query. Returns a list of model UUIDs that match the search criteria. An empty or missing search query returns all available models."),
 				mcp.WithString("SearchQuery", mcp.Description("Search query string to find models (optional; empty or omitted returns all models)")),
 			),
@@ -115,7 +115,7 @@ func (m *ModelTool) Tools() []server.ServerTool {
 		{
 			Handler: m.getModelCard,
 			Tool: mcp.NewTool(
-				"model-catalog-get-card",
+				"genai-model-catalog-get-card",
 				mcp.WithDescription("Get the model metadata for a specific model UUID."),
 				mcp.WithString("ModelUUID", mcp.Required(), mcp.Description("The unique UUID identifier of the model")),
 			),

@@ -255,6 +255,6 @@ func TestModelTool_Tools(t *testing.T) {
 		toolNames[t.Tool.Name] = true
 	}
 
-	require.True(t, toolNames["model-catalog-search"], "should have model-catalog-search tool")
-	require.True(t, toolNames["model-catalog-get-card"], "should have model-catalog-get-card tool")
+	require.True(t, toolNames["genai-model-catalog-search"], "should have genai-model-catalog-search tool")
+	require.True(t, toolNames["genai-model-catalog-get-card"], "should have genai-model-catalog-get-card tool")
 }
