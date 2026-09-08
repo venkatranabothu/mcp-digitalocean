@@ -121,6 +121,22 @@ func (mr *MockGradientAIServiceMockRecorder) CancelModelEvaluationRun(ctx, evalR
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelModelEvaluationRun", reflect.TypeOf((*MockGradientAIService)(nil).CancelModelEvaluationRun), ctx, evalRunUUID)
 }
 
+// CancelSimulationRun mocks base method.
+func (m *MockGradientAIService) CancelSimulationRun(ctx context.Context, runUUID string) (*godo.SimulationRun, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CancelSimulationRun", ctx, runUUID)
+	ret0, _ := ret[0].(*godo.SimulationRun)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CancelSimulationRun indicates an expected call of CancelSimulationRun.
+func (mr *MockGradientAIServiceMockRecorder) CancelSimulationRun(ctx, runUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelSimulationRun", reflect.TypeOf((*MockGradientAIService)(nil).CancelSimulationRun), ctx, runUUID)
+}
+
 // CreateAgent mocks base method.
 func (m *MockGradientAIService) CreateAgent(arg0 context.Context, arg1 *godo.AgentCreateRequest) (*godo.Agent, *godo.Response, error) {
 	m.ctrl.T.Helper()
@@ -279,6 +295,70 @@ func (m *MockGradientAIService) CreateOpenAIAPIKey(ctx context.Context, openaiAP
 func (mr *MockGradientAIServiceMockRecorder) CreateOpenAIAPIKey(ctx, openaiAPIKeyCreate any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateOpenAIAPIKey", reflect.TypeOf((*MockGradientAIService)(nil).CreateOpenAIAPIKey), ctx, openaiAPIKeyCreate)
+}
+
+// CreateScenarioSet mocks base method.
+func (m *MockGradientAIService) CreateScenarioSet(ctx context.Context, createRequest *godo.CreateScenarioSetRequest) (*godo.ScenarioSet, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateScenarioSet", ctx, createRequest)
+	ret0, _ := ret[0].(*godo.ScenarioSet)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateScenarioSet indicates an expected call of CreateScenarioSet.
+func (mr *MockGradientAIServiceMockRecorder) CreateScenarioSet(ctx, createRequest any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateScenarioSet", reflect.TypeOf((*MockGradientAIService)(nil).CreateScenarioSet), ctx, createRequest)
+}
+
+// CreateScenarioSetFromLibrary mocks base method.
+func (m *MockGradientAIService) CreateScenarioSetFromLibrary(ctx context.Context, libraryScenarioUUID string, createRequest *godo.CreateScenarioSetFromLibraryRequest) (*godo.ScenarioSet, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateScenarioSetFromLibrary", ctx, libraryScenarioUUID, createRequest)
+	ret0, _ := ret[0].(*godo.ScenarioSet)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateScenarioSetFromLibrary indicates an expected call of CreateScenarioSetFromLibrary.
+func (mr *MockGradientAIServiceMockRecorder) CreateScenarioSetFromLibrary(ctx, libraryScenarioUUID, createRequest any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateScenarioSetFromLibrary", reflect.TypeOf((*MockGradientAIService)(nil).CreateScenarioSetFromLibrary), ctx, libraryScenarioUUID, createRequest)
+}
+
+// CreateScenarioSetUploadPresignedURLs mocks base method.
+func (m *MockGradientAIService) CreateScenarioSetUploadPresignedURLs(ctx context.Context, createRequest *godo.CreateScenarioSetUploadPresignedURLsRequest) (*godo.CreateScenarioSetUploadPresignedURLsResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateScenarioSetUploadPresignedURLs", ctx, createRequest)
+	ret0, _ := ret[0].(*godo.CreateScenarioSetUploadPresignedURLsResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateScenarioSetUploadPresignedURLs indicates an expected call of CreateScenarioSetUploadPresignedURLs.
+func (mr *MockGradientAIServiceMockRecorder) CreateScenarioSetUploadPresignedURLs(ctx, createRequest any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateScenarioSetUploadPresignedURLs", reflect.TypeOf((*MockGradientAIService)(nil).CreateScenarioSetUploadPresignedURLs), ctx, createRequest)
+}
+
+// CreateSimulationRun mocks base method.
+func (m *MockGradientAIService) CreateSimulationRun(ctx context.Context, createRequest *godo.CreateSimulationRunRequest) (*godo.SimulationRun, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateSimulationRun", ctx, createRequest)
+	ret0, _ := ret[0].(*godo.SimulationRun)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// CreateSimulationRun indicates an expected call of CreateSimulationRun.
+func (mr *MockGradientAIServiceMockRecorder) CreateSimulationRun(ctx, createRequest any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSimulationRun", reflect.TypeOf((*MockGradientAIService)(nil).CreateSimulationRun), ctx, createRequest)
 }
 
 // DeleteAgent mocks base method.
@@ -505,6 +585,38 @@ func (mr *MockGradientAIServiceMockRecorder) DeleteOpenAIAPIKey(ctx, openaiApiKe
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteOpenAIAPIKey", reflect.TypeOf((*MockGradientAIService)(nil).DeleteOpenAIAPIKey), ctx, openaiApiKeyId)
 }
 
+// DeleteScenarioSet mocks base method.
+func (m *MockGradientAIService) DeleteScenarioSet(ctx context.Context, scenarioSetUUID string) (*godo.ScenarioSetDeleteResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteScenarioSet", ctx, scenarioSetUUID)
+	ret0, _ := ret[0].(*godo.ScenarioSetDeleteResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// DeleteScenarioSet indicates an expected call of DeleteScenarioSet.
+func (mr *MockGradientAIServiceMockRecorder) DeleteScenarioSet(ctx, scenarioSetUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteScenarioSet", reflect.TypeOf((*MockGradientAIService)(nil).DeleteScenarioSet), ctx, scenarioSetUUID)
+}
+
+// DeleteSimulationRun mocks base method.
+func (m *MockGradientAIService) DeleteSimulationRun(ctx context.Context, runUUID string) (*godo.SimulationRunDeleteResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteSimulationRun", ctx, runUUID)
+	ret0, _ := ret[0].(*godo.SimulationRunDeleteResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// DeleteSimulationRun indicates an expected call of DeleteSimulationRun.
+func (mr *MockGradientAIServiceMockRecorder) DeleteSimulationRun(ctx, runUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSimulationRun", reflect.TypeOf((*MockGradientAIService)(nil).DeleteSimulationRun), ctx, runUUID)
+}
+
 // DetachKnowledgeBaseToAgent mocks base method.
 func (m *MockGradientAIService) DetachKnowledgeBaseToAgent(ctx context.Context, agentID, knowledgeBaseID string) (*godo.Agent, *godo.Response, error) {
 	m.ctrl.T.Helper()
@@ -519,6 +631,22 @@ func (m *MockGradientAIService) DetachKnowledgeBaseToAgent(ctx context.Context, 
 func (mr *MockGradientAIServiceMockRecorder) DetachKnowledgeBaseToAgent(ctx, agentID, knowledgeBaseID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DetachKnowledgeBaseToAgent", reflect.TypeOf((*MockGradientAIService)(nil).DetachKnowledgeBaseToAgent), ctx, agentID, knowledgeBaseID)
+}
+
+// GenerateScenarioSet mocks base method.
+func (m *MockGradientAIService) GenerateScenarioSet(ctx context.Context, generateRequest *godo.GenerateScenarioSetRequest) (*godo.ScenarioSet, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GenerateScenarioSet", ctx, generateRequest)
+	ret0, _ := ret[0].(*godo.ScenarioSet)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GenerateScenarioSet indicates an expected call of GenerateScenarioSet.
+func (mr *MockGradientAIServiceMockRecorder) GenerateScenarioSet(ctx, generateRequest any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateScenarioSet", reflect.TypeOf((*MockGradientAIService)(nil).GenerateScenarioSet), ctx, generateRequest)
 }
 
 // GetAgent mocks base method.
@@ -696,6 +824,102 @@ func (m *MockGradientAIService) GetOpenAIAPIKey(ctx context.Context, openaiApiKe
 func (mr *MockGradientAIServiceMockRecorder) GetOpenAIAPIKey(ctx, openaiApiKeyId any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOpenAIAPIKey", reflect.TypeOf((*MockGradientAIService)(nil).GetOpenAIAPIKey), ctx, openaiApiKeyId)
+}
+
+// GetScenarioSet mocks base method.
+func (m *MockGradientAIService) GetScenarioSet(ctx context.Context, scenarioSetUUID string) (*godo.ScenarioSet, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetScenarioSet", ctx, scenarioSetUUID)
+	ret0, _ := ret[0].(*godo.ScenarioSet)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetScenarioSet indicates an expected call of GetScenarioSet.
+func (mr *MockGradientAIServiceMockRecorder) GetScenarioSet(ctx, scenarioSetUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetScenarioSet", reflect.TypeOf((*MockGradientAIService)(nil).GetScenarioSet), ctx, scenarioSetUUID)
+}
+
+// GetScenarioSetDownloadURL mocks base method.
+func (m *MockGradientAIService) GetScenarioSetDownloadURL(ctx context.Context, scenarioSetUUID string) (*godo.ScenarioSetDownloadURLResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetScenarioSetDownloadURL", ctx, scenarioSetUUID)
+	ret0, _ := ret[0].(*godo.ScenarioSetDownloadURLResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetScenarioSetDownloadURL indicates an expected call of GetScenarioSetDownloadURL.
+func (mr *MockGradientAIServiceMockRecorder) GetScenarioSetDownloadURL(ctx, scenarioSetUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetScenarioSetDownloadURL", reflect.TypeOf((*MockGradientAIService)(nil).GetScenarioSetDownloadURL), ctx, scenarioSetUUID)
+}
+
+// GetSimulationJourney mocks base method.
+func (m *MockGradientAIService) GetSimulationJourney(ctx context.Context, runUUID, journeyUUID string) (*godo.SimulationJourney, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSimulationJourney", ctx, runUUID, journeyUUID)
+	ret0, _ := ret[0].(*godo.SimulationJourney)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetSimulationJourney indicates an expected call of GetSimulationJourney.
+func (mr *MockGradientAIServiceMockRecorder) GetSimulationJourney(ctx, runUUID, journeyUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSimulationJourney", reflect.TypeOf((*MockGradientAIService)(nil).GetSimulationJourney), ctx, runUUID, journeyUUID)
+}
+
+// GetSimulationJourneyTrajectory mocks base method.
+func (m *MockGradientAIService) GetSimulationJourneyTrajectory(ctx context.Context, runUUID, journeyUUID string) (*godo.SimulationTrajectory, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSimulationJourneyTrajectory", ctx, runUUID, journeyUUID)
+	ret0, _ := ret[0].(*godo.SimulationTrajectory)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetSimulationJourneyTrajectory indicates an expected call of GetSimulationJourneyTrajectory.
+func (mr *MockGradientAIServiceMockRecorder) GetSimulationJourneyTrajectory(ctx, runUUID, journeyUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSimulationJourneyTrajectory", reflect.TypeOf((*MockGradientAIService)(nil).GetSimulationJourneyTrajectory), ctx, runUUID, journeyUUID)
+}
+
+// GetSimulationJourneyTrajectoryURL mocks base method.
+func (m *MockGradientAIService) GetSimulationJourneyTrajectoryURL(ctx context.Context, runUUID, journeyUUID string) (*godo.SimulationJourneyTrajectoryURLResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSimulationJourneyTrajectoryURL", ctx, runUUID, journeyUUID)
+	ret0, _ := ret[0].(*godo.SimulationJourneyTrajectoryURLResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetSimulationJourneyTrajectoryURL indicates an expected call of GetSimulationJourneyTrajectoryURL.
+func (mr *MockGradientAIServiceMockRecorder) GetSimulationJourneyTrajectoryURL(ctx, runUUID, journeyUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSimulationJourneyTrajectoryURL", reflect.TypeOf((*MockGradientAIService)(nil).GetSimulationJourneyTrajectoryURL), ctx, runUUID, journeyUUID)
+}
+
+// GetSimulationRun mocks base method.
+func (m *MockGradientAIService) GetSimulationRun(ctx context.Context, runUUID string) (*godo.SimulationRunGetResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSimulationRun", ctx, runUUID)
+	ret0, _ := ret[0].(*godo.SimulationRunGetResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetSimulationRun indicates an expected call of GetSimulationRun.
+func (mr *MockGradientAIServiceMockRecorder) GetSimulationRun(ctx, runUUID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSimulationRun", reflect.TypeOf((*MockGradientAIService)(nil).GetSimulationRun), ctx, runUUID)
 }
 
 // ImportCustomModel mocks base method.
@@ -1034,6 +1258,102 @@ func (mr *MockGradientAIServiceMockRecorder) ListOpenAIAPIKeys(arg0, arg1 any) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListOpenAIAPIKeys", reflect.TypeOf((*MockGradientAIService)(nil).ListOpenAIAPIKeys), arg0, arg1)
 }
 
+// ListScenarioLibrary mocks base method.
+func (m *MockGradientAIService) ListScenarioLibrary(ctx context.Context, opt *godo.ScenarioLibraryListOptions) (*godo.ScenarioLibraryListResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListScenarioLibrary", ctx, opt)
+	ret0, _ := ret[0].(*godo.ScenarioLibraryListResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListScenarioLibrary indicates an expected call of ListScenarioLibrary.
+func (mr *MockGradientAIServiceMockRecorder) ListScenarioLibrary(ctx, opt any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListScenarioLibrary", reflect.TypeOf((*MockGradientAIService)(nil).ListScenarioLibrary), ctx, opt)
+}
+
+// ListScenarioLibraryScenarios mocks base method.
+func (m *MockGradientAIService) ListScenarioLibraryScenarios(ctx context.Context, libraryScenarioUUID string, opt *godo.ScenarioListOptions) (*godo.ScenarioListResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListScenarioLibraryScenarios", ctx, libraryScenarioUUID, opt)
+	ret0, _ := ret[0].(*godo.ScenarioListResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListScenarioLibraryScenarios indicates an expected call of ListScenarioLibraryScenarios.
+func (mr *MockGradientAIServiceMockRecorder) ListScenarioLibraryScenarios(ctx, libraryScenarioUUID, opt any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListScenarioLibraryScenarios", reflect.TypeOf((*MockGradientAIService)(nil).ListScenarioLibraryScenarios), ctx, libraryScenarioUUID, opt)
+}
+
+// ListScenarioSets mocks base method.
+func (m *MockGradientAIService) ListScenarioSets(ctx context.Context, opt *godo.ScenarioSetListOptions) (*godo.ScenarioSetListResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListScenarioSets", ctx, opt)
+	ret0, _ := ret[0].(*godo.ScenarioSetListResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListScenarioSets indicates an expected call of ListScenarioSets.
+func (mr *MockGradientAIServiceMockRecorder) ListScenarioSets(ctx, opt any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListScenarioSets", reflect.TypeOf((*MockGradientAIService)(nil).ListScenarioSets), ctx, opt)
+}
+
+// ListScenarios mocks base method.
+func (m *MockGradientAIService) ListScenarios(ctx context.Context, scenarioSetUUID string, opt *godo.ScenarioListOptions) (*godo.ScenarioListResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListScenarios", ctx, scenarioSetUUID, opt)
+	ret0, _ := ret[0].(*godo.ScenarioListResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListScenarios indicates an expected call of ListScenarios.
+func (mr *MockGradientAIServiceMockRecorder) ListScenarios(ctx, scenarioSetUUID, opt any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListScenarios", reflect.TypeOf((*MockGradientAIService)(nil).ListScenarios), ctx, scenarioSetUUID, opt)
+}
+
+// ListSimulationJourneys mocks base method.
+func (m *MockGradientAIService) ListSimulationJourneys(ctx context.Context, runUUID string, opt *godo.SimulationJourneyListOptions) (*godo.SimulationJourneyListResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListSimulationJourneys", ctx, runUUID, opt)
+	ret0, _ := ret[0].(*godo.SimulationJourneyListResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListSimulationJourneys indicates an expected call of ListSimulationJourneys.
+func (mr *MockGradientAIServiceMockRecorder) ListSimulationJourneys(ctx, runUUID, opt any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSimulationJourneys", reflect.TypeOf((*MockGradientAIService)(nil).ListSimulationJourneys), ctx, runUUID, opt)
+}
+
+// ListSimulationRuns mocks base method.
+func (m *MockGradientAIService) ListSimulationRuns(ctx context.Context, opt *godo.SimulationRunListOptions) (*godo.SimulationRunListResponse, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListSimulationRuns", ctx, opt)
+	ret0, _ := ret[0].(*godo.SimulationRunListResponse)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListSimulationRuns indicates an expected call of ListSimulationRuns.
+func (mr *MockGradientAIServiceMockRecorder) ListSimulationRuns(ctx, opt any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSimulationRuns", reflect.TypeOf((*MockGradientAIService)(nil).ListSimulationRuns), ctx, opt)
+}
+
 // RegenerateAgentAPIKey mocks base method.
 func (m *MockGradientAIService) RegenerateAgentAPIKey(arg0 context.Context, arg1, arg2 string) (*godo.ApiKeyInfo, *godo.Response, error) {
 	m.ctrl.T.Helper()
@@ -1272,4 +1592,36 @@ func (m *MockGradientAIService) UpdateOpenAIAPIKey(ctx context.Context, openaiAp
 func (mr *MockGradientAIServiceMockRecorder) UpdateOpenAIAPIKey(ctx, openaiApiKeyId, openaiAPIKeyUpdate any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOpenAIAPIKey", reflect.TypeOf((*MockGradientAIService)(nil).UpdateOpenAIAPIKey), ctx, openaiApiKeyId, openaiAPIKeyUpdate)
+}
+
+// UpdateScenarioSet mocks base method.
+func (m *MockGradientAIService) UpdateScenarioSet(ctx context.Context, scenarioSetUUID string, updateRequest *godo.UpdateScenarioSetRequest) (*godo.ScenarioSet, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateScenarioSet", ctx, scenarioSetUUID, updateRequest)
+	ret0, _ := ret[0].(*godo.ScenarioSet)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// UpdateScenarioSet indicates an expected call of UpdateScenarioSet.
+func (mr *MockGradientAIServiceMockRecorder) UpdateScenarioSet(ctx, scenarioSetUUID, updateRequest any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateScenarioSet", reflect.TypeOf((*MockGradientAIService)(nil).UpdateScenarioSet), ctx, scenarioSetUUID, updateRequest)
+}
+
+// UpdateSimulationRun mocks base method.
+func (m *MockGradientAIService) UpdateSimulationRun(ctx context.Context, runUUID string, updateRequest *godo.UpdateSimulationRunRequest) (*godo.SimulationRun, *godo.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateSimulationRun", ctx, runUUID, updateRequest)
+	ret0, _ := ret[0].(*godo.SimulationRun)
+	ret1, _ := ret[1].(*godo.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// UpdateSimulationRun indicates an expected call of UpdateSimulationRun.
+func (mr *MockGradientAIServiceMockRecorder) UpdateSimulationRun(ctx, runUUID, updateRequest any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSimulationRun", reflect.TypeOf((*MockGradientAIService)(nil).UpdateSimulationRun), ctx, runUUID, updateRequest)
 }

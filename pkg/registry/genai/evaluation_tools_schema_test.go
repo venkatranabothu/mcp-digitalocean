@@ -79,3 +79,40 @@ func TestModelEvaluationToolListParamSchemas(t *testing.T) {
 		require.Equal(t, "string", items["type"], "tool %s metric_uuids items should be string", toolName)
 	}
 }
+
+func TestSimulationToolListParamSchemas(t *testing.T) {
+	stool := NewSimulationTool(func(ctx context.Context) (*godo.Client, error) {
+		return nil, nil
+	})
+
+	cases := map[string][]string{
+		"genai-simulation-list-scenario-sets": {"statuses"},
+		"genai-simulation-list-runs":          {"statuses"},
+		"genai-simulation-list-journeys":      {"statuses", "verdicts"},
+		"genai-simulation-create-run":         {"metric_uuids"},
+	}
+
+	byName := make(map[string]map[string]any)
+	for _, st := range stool.Tools() {
+		raw, err := json.Marshal(st.Tool.InputSchema)
+		require.NoError(t, err)
+		var schema map[string]any
+		require.NoError(t, json.Unmarshal(raw, &schema))
+		props, ok := schema["properties"].(map[string]any)
+		require.True(t, ok, "tool %s missing properties", st.Tool.Name)
+		byName[st.Tool.Name] = props
+	}
+
+	for toolName, fields := range cases {
+		props, ok := byName[toolName]
+		require.True(t, ok, "tool %s not registered", toolName)
+		for _, field := range fields {
+			prop, ok := props[field].(map[string]any)
+			require.True(t, ok, "tool %s missing property %s", toolName, field)
+			require.Equal(t, "array", prop["type"], "tool %s field %s should be array, got %#v", toolName, field, prop["type"])
+			items, ok := prop["items"].(map[string]any)
+			require.True(t, ok, "tool %s field %s missing items", toolName, field)
+			require.Equal(t, "string", items["type"], "tool %s field %s items should be string", toolName, field)
+		}
+	}
+}
