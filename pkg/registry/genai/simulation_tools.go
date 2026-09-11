@@ -873,7 +873,7 @@ func (st *SimulationTool) Tools() []server.ServerTool {
 				mcp.WithNumber("exploration_budget", mcp.Description("Optional exploration budget for journeys")),
 				mcp.WithNumber("max_turns", mcp.Description("Optional max turns per journey")),
 				mcp.WithArray("metric_uuids", mcp.Description("Optional evaluation metric UUIDs to attach"), mcp.Items(map[string]any{"type": "string"})),
-				mcp.WithObject("star_metric", mcp.Description("Optional primary success metric: metric_uuid and optional success_threshold (preferred; success_threshold_pct is deprecated)")),
+				mcp.WithObject("star_metric", mcp.Description("Optional primary success metric: metric_uuid and optional success_threshold")),
 			),
 		},
 		{
