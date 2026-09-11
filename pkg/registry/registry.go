@@ -150,6 +150,7 @@ func registerModelCatalogTools(s *server.MCPServer, getClient getClientFn) error
 func registerGenAIEvaluationTools(s *server.MCPServer, getClient getClientFn) error {
 	s.AddTools(genai.NewEvaluationTool(getClient).Tools()...)
 	s.AddTools(genai.NewModelEvaluationTool(getClient).Tools()...)
+	s.AddTools(genai.NewSimulationTool(getClient).Tools()...)
 	return nil
 }
 

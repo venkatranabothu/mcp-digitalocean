@@ -4,21 +4,27 @@ This package provides MCP tools for DigitalOcean's GenAI platform.
 
 ## Overview
 
-The package contains two sets of evaluation tools:
+The package contains three sets of tools under `genai-evaluation`:
 
-**Agent Evaluation** (`genai-evaluation`) — evaluate deployed agents end-to-end:
+**Agent Evaluation** — evaluate deployed agents end-to-end:
 - List available evaluation metrics
 - Manage evaluation datasets (upload CSV files)
 - Create and update evaluation test cases
 - Run evaluations against agent deployments
 - Monitor evaluation run status
 
-**Model Evaluation** (under `genai-evaluation`) — evaluate raw models directly:
+**Model Evaluation** — evaluate raw models directly:
 - List available model evaluation metrics
 - Upload evaluation datasets
 - Create and run model evaluation runs
 - Download evaluation results
 - Monitor model evaluation run status
+
+**Simulation** — multi-turn agent simulations with scenario sets and journeys:
+- Manage team-owned scenario sets (create, generate, upload JSONL, update, delete)
+- Browse the platform scenario library and materialize entries into team sets
+- Create and monitor simulation runs against candidate agents
+- Inspect journeys and trajectory transcripts
 
 ## Tools
 
@@ -680,4 +686,135 @@ genai-model-eval-run-workflow
 - `FAILED`: Run failed completely
 
 Terminal statuses: `SUCCESSFUL`, `FAILED`, `CANCELLED`, `PARTIALLY_SUCCESSFUL`
+
+---
+
+# Simulation Tools
+
+These tools run multi-turn agent simulations. A **scenario set** defines what to test; a **simulation run** executes that set against a candidate agent; each execution produces a **journey** with a transcript (**trajectory**) and judge verdict.
+
+## Scenario Set Tools
+
+#### `genai-simulation-list-scenario-sets`
+List team-owned scenario sets. Optional filters: `search`, `statuses`, `page`, `per_page`.
+
+#### `genai-simulation-get-scenario-set`
+Get one scenario set by `scenario_set_uuid`.
+
+#### `genai-simulation-create-scenario-set`
+Create a scenario set from **exactly one** of:
+- `scenarios`: array of objects with required `name` and optional `description`, `user_persona`, `stopping_criteria`, `max_turns`, `exploration_budget`
+- `file_path`: local `.jsonl` file (each line a JSON object with a non-empty `name`)
+
+Required: `name`.
+
+#### `genai-simulation-generate-scenario-set`
+Generate scenarios from a natural-language goal. Required: `name`, `goal_description`. Optional: `num_scenarios`, `generator_model_uuid`. Poll `genai-simulation-get-scenario-set` until status is `SCENARIO_SET_STATUS_READY`.
+
+#### `genai-simulation-list-scenarios`
+List scenarios in a team scenario set (`scenario_set_uuid` required).
+
+#### `genai-simulation-get-scenario-set-download-url`
+Get a short-lived presigned URL for the scenario set JSONL.
+
+#### `genai-simulation-update-scenario-set`
+Update `name` and/or replace `scenarios` (at least one required).
+
+#### `genai-simulation-delete-scenario-set`
+Delete a scenario set. Requires `confirm_deletion: true` after explicit user consent.
+
+## Scenario Library Tools
+
+#### `genai-simulation-list-scenario-library`
+List platform-curated library entries. Optional: `category`, `search`, pagination.
+
+#### `genai-simulation-list-scenario-library-scenarios`
+List scenarios inside a library entry (`library_scenario_uuid` required).
+
+#### `genai-simulation-create-scenario-set-from-library`
+Materialize a library entry into a team-owned scenario set. Required: `library_scenario_uuid`. Optional: `name`.
+
+## Simulation Run Tools
+
+#### `genai-simulation-create-run`
+Create a run. Required: `scenario_set_uuid`, `agent_uuid`. Optional: `name`, `agent_deployment_uuid`, `agent_name`, `user_simulator_model_uuid`, `judge_model_uuid`, `user_simulator_config`, `exploration_budget`, `max_turns`, `metric_uuids`, `star_metric`.
+
+#### `genai-simulation-list-runs`
+List runs. Optional filters: `scenario_set_uuid`, `statuses`, `search`, pagination.
+
+#### `genai-simulation-get-run`
+Get a run by `run_uuid`, including per-scenario result rollups when available.
+
+#### `genai-simulation-update-run`
+Rename a run (`run_uuid`, `name`).
+
+#### `genai-simulation-cancel-run`
+Cancel an in-progress run. Requires `confirm_cancel: true` after explicit user consent.
+
+#### `genai-simulation-delete-run`
+Delete a run. Requires `confirm_deletion: true` after explicit user consent.
+
+## Journey Tools
+
+#### `genai-simulation-list-journeys`
+List journeys for a run (`run_uuid` required). Optional filters: `scenario_uuid`, `statuses`, `verdicts`, `search`, pagination.
+
+#### `genai-simulation-get-journey`
+Get one journey (`run_uuid`, `journey_uuid`).
+
+#### `genai-simulation-get-journey-trajectory`
+Get parsed trajectory JSON (messages, tool calls, judge result, metrics).
+
+#### `genai-simulation-get-journey-trajectory-url`
+Get a short-lived presigned download URL for the trajectory file.
+
+## Simulation Workflow Example
+
+```
+# 1. Create or reuse a scenario set
+genai-simulation-create-scenario-set
+  name: "billing-support"
+  scenarios: [{"name":"cancel-subscription","user_persona":"frustrated customer","stopping_criteria":["subscription cancelled"]}]
+
+# 2. Start a run against a candidate agent
+genai-simulation-create-run
+  scenario_set_uuid: "<from step 1>"
+  agent_uuid: "<agent-uuid>"
+  name: "billing-sim-v1"
+
+# 3. Poll the run
+genai-simulation-get-run
+  run_uuid: "<from step 2>"
+
+# 4. Inspect journeys and trajectories
+genai-simulation-list-journeys
+  run_uuid: "<from step 2>"
+
+genai-simulation-get-journey-trajectory
+  run_uuid: "<from step 2>"
+  journey_uuid: "<from list>"
+```
+
+## Scenario Set Status Values
+
+- `SCENARIO_SET_STATUS_GENERATING`
+- `SCENARIO_SET_STATUS_READY`
+- `SCENARIO_SET_STATUS_FAILED`
+- `SCENARIO_SET_STATUS_CANCELLED`
+
+## Simulation Run Status Values
+
+- `SIMULATION_RUN_STATUS_PENDING`
+- `SIMULATION_RUN_STATUS_RUNNING`
+- `SIMULATION_RUN_STATUS_EVALUATING`
+- `SIMULATION_RUN_STATUS_SUCCEEDED`
+- `SIMULATION_RUN_STATUS_PARTIALLY_SUCCESSFUL`
+- `SIMULATION_RUN_STATUS_FAILED`
+- `SIMULATION_RUN_STATUS_CANCELLED`
+
+## Journey Verdict Values
+
+- `SIMULATION_JOURNEY_VERDICT_SUCCESS`
+- `SIMULATION_JOURNEY_VERDICT_FAILURE`
+- `SIMULATION_JOURNEY_VERDICT_INCONCLUSIVE`
 
