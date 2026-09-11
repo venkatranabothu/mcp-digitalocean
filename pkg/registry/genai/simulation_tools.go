@@ -861,7 +861,7 @@ func (st *SimulationTool) Tools() []server.ServerTool {
 				"genai-simulation-create-run",
 				common.WithHints(common.HintsCreate),
 				common.WithRisk(common.RiskMedium),
-				mcp.WithDescription("Create a simulation run that executes a scenario set against a candidate agent. Requires scenario_set_uuid and agent_uuid. Optional evaluation_config attaches metrics for post-run scoring."),
+				mcp.WithDescription("Create a simulation run that executes a scenario set against a candidate agent. Requires scenario_set_uuid and agent_uuid. Optional metric_uuids and star_metric attach metrics for post-run scoring."),
 				mcp.WithString("scenario_set_uuid", mcp.Required(), mcp.Description("UUID of the scenario set to run")),
 				mcp.WithString("agent_uuid", mcp.Required(), mcp.Description("UUID of the candidate agent under test")),
 				mcp.WithString("name", mcp.Description("Optional name for this simulation run")),
@@ -873,7 +873,7 @@ func (st *SimulationTool) Tools() []server.ServerTool {
 				mcp.WithNumber("exploration_budget", mcp.Description("Optional exploration budget for journeys")),
 				mcp.WithNumber("max_turns", mcp.Description("Optional max turns per journey")),
 				mcp.WithArray("metric_uuids", mcp.Description("Optional evaluation metric UUIDs to attach"), mcp.Items(map[string]any{"type": "string"})),
-				mcp.WithObject("star_metric", mcp.Description("Optional primary success metric: metric_uuid and optional success_threshold_pct")),
+				mcp.WithObject("star_metric", mcp.Description("Optional primary success metric: metric_uuid and optional success_threshold (preferred; success_threshold_pct is deprecated)")),
 			),
 		},
 		{
